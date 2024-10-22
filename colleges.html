@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* Full height for html and body */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Use flexbox for layout */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ensure content fills available space */
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Footer sticks to the bottom */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader_bg">
+        <div class="loader"><img src="images/loading.gif" alt="Loading..." /></div>
+    </div>
+
+    <!-- Side Panel -->
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="index.html">Home</a>
+        <a class="active" href="colleges.html">Create College</a>
+        <a href="classwise.html">Class Wise</a>
+        <a href="studentwise.html">Student Wise</a>
+        <a href="template.html">Templates</a>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="head-top">
+            <div class="container-fluid">
+                <div class="row d_flex align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <button class="openbtn" onclick="openNav()">
+                            <img src="images/menu_btn.png" alt="Menu Button" />
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <ul class="email d-flex justify-content-end align-items-center m-0 p-0">
+                            <li class="me-3">
+                                <a href="javascript:void(0)">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div>
+            <h2>Select an Action</h2>
+            <div class="mt-4">
+                <a href="college_creation.html" class="btn btn-primary me-2">Create New College</a>
+                <a href="php/view_colleges.php" class="btn btn-secondary">View Colleges</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <p>Tech Fifo Innovations | Copyrights© 2024 All Rights Reserved.<br>
+                        Designed and developed by Tech Fifo Innovations</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+</html>
