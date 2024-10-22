@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Welcome Page</title>
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+   <style>
+      /* Basic Reset */
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      body {
+         font-family: 'Poppins', sans-serif;
+         height: 100vh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         /* background: linear-gradient(135deg, #74b9ff, #a29bfe); */
+         background-image: "../images/bg-body.jpg";
+      }
+
+      /* Welcome Page Container */
+      .welcome-container {
+         text-align: center;
+         background-color: #2d3436;
+         padding: 50px;
+         border-radius: 15px;
+         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+         font-size: 3rem;
+         margin-bottom: 20px;
+         color: whitesmoke;
+      }
+
+      p {
+         font-size: 1.2rem;
+         margin-bottom: 30px;
+         color: whitesmoke;
+      }
+
+      /* Buttons */
+      .button-container {
+         display: flex;
+         justify-content: center;
+         gap: 20px;
+      }
+
+      .btn {
+         padding: 15px 30px;
+         font-size: 1rem;
+         font-weight: 600;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+         transition: all 0.3s ease;
+         outline: none;
+      }
+
+      .btn-primary {
+         background-color: #0984e3;
+         color: white;
+      }
+
+      .btn-primary:hover {
+         background-color: #74b9ff;
+         transform: translateY(-3px);
+      }
+
+      .btn-secondary {
+         background-color: #6c5ce7;
+         color: white;
+      }
+
+      .btn-secondary:hover {
+         background-color: #a29bfe;
+         transform: translateY(-3px);
+      }
+
+      .btn:active {
+         transform: scale(0.95);
+      }
+   </style>
+</head>
+<body>
+
+   <div class="welcome-container">
+      <h1>Welcome to Project ID-Card<h1>
+      <p>Click to proceed with login</p>
+      <div class="button-container">
+         <button class="btn btn-secondary" onclick="redirectToPage('login.html')">Admin Login</button>
+      </div>
+   </div>
+
+   <script>
+      // JavaScript Function to Redirect
+      function redirectToPage(page) {
+         window.location.href = page;
+      }
+   </script>
+
+</body>
+</html>

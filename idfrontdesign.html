@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Template Designer</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .available-fields, .id-card-template {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid #000;
+            height: 600px; /* Increased height for a vertical card */
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .draggable {
+            padding: 10px;
+            margin: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            cursor: grab;
+        }
+
+        .id-card-template {
+            border: 2px solid #000;
+            position: relative;
+            width: 300px; /* Narrower width for vertical card */
+            height: 500px; /* Adjusted height */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .id-card-template div {
+            position: absolute;
+            border: 1px dashed #888;
+            padding: 5px;
+            cursor: move;
+        }
+
+        .save-template {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        .controls label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .controls select, .controls input {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .font-selector {
+            margin-top: 10px;
+        }
+
+        .font-options {
+            width: 100%;
+            padding: 10px;
+        }
+
+        /* New button styles */
+        .upload-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-input {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Design Your ID Card Template</h1>
+
+    <div class="container">
+        <!-- Available fields to drag and drop -->
+        <div class="available-fields">
+            <h3>Available Fields</h3>
+            <div class="draggable" id="name">Name</div>
+            <div class="draggable" id="roll_number">Roll Number</div>
+            <div class="draggable" id="father_name">Father's Name</div>
+            <div class="draggable" id="address">Address</div>
+            <div class="draggable" id="blood_group">Blood Group</div>
+            <div class="draggable" id="photo">Photo</div>
+            <div class="draggable" id="phone">Phone Number</div>
+        </div>
+
+        <!-- ID card template area where the fields can be dropped -->
+        <div class="id-card-template" id="id-card-template"></div>
+    </div>
+
+    <!-- Controls for customizing font, color, and size -->
+    <div class="controls">
+        <label for="font">Font</label>
+        <select id="font" class="font-options">
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Courier New">Courier New</option>
+        </select>
+
+        <label for="font-size">Font Size</label>
+        <select id="font-size" class="font-options">
+            <option value="12px">12px</option>
+            <option value="16px">16px</option>
+            <option value="20px">20px</option>
+            <option value="24px">24px</option>
+        </select>
+
+        <label for="font-color">Font Color</label>
+        <input type="color" id="font-color" value="#000000">
+    </div>
+
+    <!-- Upload Background Image -->
+    <label for="upload-image" class="upload-button">Upload Background Image</label>
+    <input type="file" id="upload-image" class="upload-input" accept="image/*">
+
+    <!-- Save template button -->
+    <button class="save-template" id="save-template">Save & Proceed</button>
+
+
+    <!-- Include jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function() {
+            let currentFont = 'Arial';
+            let currentFontSize = '12px';
+            let currentColor = '#000000';
+            let backgroundImage = '';
+
+            // Make the fields draggable
+            $(".draggable").draggable({
+                helper: "clone"
+            });
+
+            // Make the ID card template droppable
+            $("#id-card-template").droppable({
+                accept: ".draggable",
+                drop: function(event, ui) {
+                    var draggedElement = ui.helper[0];
+                    var fieldName = $(draggedElement).text(); // Get the text (field name) of the dragged element
+
+                    // Create the field div with the field name
+                    var div = $('<div class="field" id="field-' + fieldName + '">' + fieldName + '</div>');
+
+                    // Set the style of the field based on current selections
+                    div.css({
+                        fontFamily: currentFont,
+                        fontSize: currentFontSize,
+                        color: currentColor
+                    });
+
+                    // Calculate the position of the field based on drop coordinates
+                    var top = event.pageY - $(this).offset().top;
+                    var left = event.pageX - $(this).offset().left;
+
+                    // Append the new field to the ID card template
+                    $(this).append(div);
+
+                    // Set the position of the field
+                    div.css({
+                        top: top + 'px',
+                        left: left + 'px'
+                    });
+
+                    // Make the newly dropped element draggable after drop
+                    div.draggable({
+                        containment: "#id-card-template", // Restrict movement to the template
+                        drag: function(event, ui) {
+                            // Optionally, you can update positions in real-time during dragging
+                            $(this).css({
+                                top: ui.position.top + 'px',
+                                left: ui.position.left + 'px'
+                            });
+                        }
+                    });
+                }
+            });
+
+            // Change font
+            $('#font').on('change', function() {
+                currentFont = $(this).val();
+            });
+
+            // Change font size
+            $('#font-size').on('change', function() {
+                currentFontSize = $(this).val();
+            });
+
+            // Change font color
+            $('#font-color').on('input', function() {
+                currentColor = $(this).val();
+            });
+
+            // Upload background image
+            $('#upload-image').on('change', function(event) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    backgroundImage = e.target.result; // Get the base64 image data
+                    $('#id-card-template').css('background-image', 'url(' + backgroundImage + ')');
+                };
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            // Save the template when the button is clicked
+            $('#save-template').on('click', function() {
+                var templateData = [];
+                $('#id-card-template .field').each(function() {
+                    templateData.push({
+                        field: $(this).text(),
+                        position: {
+                            top: $(this).position().top,
+                            left: $(this).position().left
+                        },
+                        style: {
+                            fontFamily: $(this).css('fontFamily'),
+                            fontSize: $(this).css('fontSize'),
+                            color: $(this).css('color')
+                        }
+                    });
+                });
+
+                // Include the background image in the template data
+                if (backgroundImage) {
+                    templateData.push({ front_design: backgroundImage });
+                }
+
+                // Send the template data to the server
+                $.ajax({
+                    url: 'php/idfrontdesign.php',
+                    type: 'POST',
+                    data: { front_template: JSON.stringify(templateData) },
+                    success: function(response) {
+                        alert(response);
+                    },
+                    error: function(xhr, status, error) {
+                    console.error("AJAX Error: " + error);
+                     }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
